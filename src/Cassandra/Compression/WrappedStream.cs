@@ -8,7 +8,7 @@ namespace Cassandra.Compression
 {
     /// <summary>
     /// A simple wrapper to a stream that allows to limit the length of the provided stream.
-    /// Used to overcome the deficiencies in the Compression API (not providing a length) 
+    /// Used to overcome the deficiencies in the Compression API (not providing a length)
     /// </summary>
     internal class WrappedStream : Stream
     {
