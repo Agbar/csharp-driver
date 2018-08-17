@@ -122,7 +122,7 @@ namespace Cassandra.IntegrationTests.Core
                 var prepareRequest = new PrepareRequest(BasicQuery);
                 var task = connection.Send(prepareRequest);
                 var prepareOutput = ValidateResult<OutputPrepared>(task.Result);
-                
+
                 //Execute the prepared query
                 var executeRequest = new ExecuteRequest(GetProtocolVersion(), prepareOutput.QueryId, null, false, QueryProtocolOptions.Default);
                 task = connection.Send(executeRequest);
@@ -297,9 +297,9 @@ namespace Cassandra.IntegrationTests.Core
                 }
                 catch (AggregateException)
                 {
-                    
+
                 }
-                Assert.True(taskList.All(t => 
+                Assert.True(taskList.All(t =>
                     t.Status == TaskStatus.RanToCompletion ||
                     (t.Exception != null && t.Exception.InnerException is ReadTimeoutException)), "Not all task completed");
             }
@@ -367,7 +367,7 @@ namespace Cassandra.IntegrationTests.Core
                     Assert.IsInstanceOf<SchemaChangeEventArgs>(eventArgs);
                     Assert.AreEqual(SchemaChangeEventArgs.Reason.Created, (eventArgs as SchemaChangeEventArgs).What);
                     Assert.AreEqual("test_events_kp", (eventArgs as SchemaChangeEventArgs).Keyspace);
-                    Assert.AreEqual("test_type", (eventArgs as SchemaChangeEventArgs).Type);   
+                    Assert.AreEqual("test_type", (eventArgs as SchemaChangeEventArgs).Type);
                 }
             }
         }
@@ -412,15 +412,15 @@ namespace Cassandra.IntegrationTests.Core
         }
 
         /// Tests that a ssl connection to a host with ssl disabled fails (not hangs)
-        /// 
+        ///
         /// @since 3.0.0
         /// @jira_ticket CSHARP-336
-        /// 
+        ///
         /// @test_category conection:ssl
         [Test]
         public void Ssl_Connect_With_Ssl_Disabled_Host()
         {
-            var config = new Configuration(Cassandra.Policies.DefaultPolicies, 
+            var config = new Configuration(Cassandra.Policies.DefaultPolicies,
                 new ProtocolOptions(ProtocolOptions.DefaultPort, new SSLOptions()),
                 new PoolingOptions(),
                  new SocketOptions().SetConnectTimeoutMillis(200),
@@ -438,7 +438,7 @@ namespace Cassandra.IntegrationTests.Core
                     //So we throw a TimeoutException
                     StringAssert.IsMatch("SSL", ex.InnerException.Message);
                 }
-                else if (ex.InnerException is System.IO.IOException || 
+                else if (ex.InnerException is System.IO.IOException ||
                          ex.InnerException.GetType().Name.Contains("Mono") ||
                          ex.InnerException is System.Security.Authentication.AuthenticationException)
                 {
@@ -452,7 +452,7 @@ namespace Cassandra.IntegrationTests.Core
                 }
             }
         }
-        
+
         [Test]
         public void SetKeyspace_Test()
         {
@@ -613,11 +613,11 @@ namespace Cassandra.IntegrationTests.Core
             var socketOptions = new SocketOptions();
             socketOptions.SetConnectTimeoutMillis(1000);
             var config = new Configuration(
-                new Cassandra.Policies(), 
-                new ProtocolOptions(), 
-                new PoolingOptions(), 
-                socketOptions, 
-                new ClientOptions(), 
+                new Cassandra.Policies(),
+                new ProtocolOptions(),
+                new PoolingOptions(),
+                socketOptions,
+                new ClientOptions(),
                 NoneAuthProvider.Instance,
                 null,
                 new QueryOptions(),
